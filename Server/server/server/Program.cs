@@ -36,11 +36,12 @@ namespace server
                         byte[] clientBuffor = new byte[1024];
                         if (bufforString == "EUR")
                         {
-                            string eur1 = Eur1("https://www.walutomat.pl/kursy-walut/");
-                            string eur2 = Eur2("https://internetowykantor.pl/kursy-walut/");
-                            string eur3 = Eur3("https://www.kantoria.com/notowania.html");
+                            string eur1 = Eur1("https://www.walutomat.pl/kursy-walut/").Result;
+                            string eur2 = Eur2("https://internetowykantor.pl/kursy-walut/").Result;
+                            string eur3 = Eur3("https://www.kantoria.com/notowania.html").Result;
 
-                            clientBuffor = ASCIIEncoding.ASCII.GetBytes(eur1+ " " + eur2 + " " + eur3);
+
+                            clientBuffor = ASCIIEncoding.ASCII.GetBytes(eur1 + " " + eur2 + " " + eur3);
                         }
                         
                         await client.GetStream().WriteAsync(clientBuffor, 0, clientBuffor.Length);
@@ -53,8 +54,10 @@ namespace server
             }
         }
 
-        static string Eur1(string link)
+        static Task<string> Eur1(string link)
         {
+            return Task.Run(() =>
+            { 
             var page = string.Empty;
             using (var webClient = new System.Net.WebClient())
             {
@@ -68,11 +71,14 @@ namespace server
             string value = nodes[0].InnerText;
 
             return value;
+            });
 
         }
-        static string Eur2(string link)
+        static Task<string> Eur2(string link)
         {
-            var page = string.Empty;
+            return Task.Run(() =>
+            {
+                var page = string.Empty;
             using (var webClient = new System.Net.WebClient())
             {
                 page = webClient.DownloadString(link);
@@ -85,11 +91,14 @@ namespace server
             string value = nodes[0].InnerText;
 
             return value;
+            });
 
         }
-        static string Eur3(string link)
+        static Task<string> Eur3(string link)
         {
-            var page = string.Empty;
+            return Task.Run(() =>
+            {
+                var page = string.Empty;
             using (var webClient = new System.Net.WebClient())
             {
                 page = webClient.DownloadString(link);
@@ -103,7 +112,7 @@ namespace server
             value = value.Replace(".", ",");
 
             return value;
-
+            });
         }
 
 
