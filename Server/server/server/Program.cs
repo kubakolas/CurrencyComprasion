@@ -30,33 +30,39 @@ namespace server
                 async (t) =>
                 {
                     int i = t.Result;
-                    Console.WriteLine("Server get first data from" + port + System.Text.Encoding.Default.GetString(buffer).Substring(0, i));
-
                     while (true)
                     {
-                        await client.GetStream().WriteAsync(buffer, 0, i);
-                        i = await client.GetStream().ReadAsync(buffer, 0, buffer.Length);
-                        string string_buffor = System.Text.Encoding.Default.GetString(buffer).Substring(0, i);
-                        if(string_buffor == "EUR")
+                        string bufforString = System.Text.Encoding.Default.GetString(buffer).Substring(0, i);
+                        byte[] clientBuffor = new byte[1024];
+                        if (bufforString == "EUR")
                         {
-                            buffer = ASCIIEncoding.ASCII.GetBytes("sshshhshshhshshs");
+                            string eur1 = Eur1("https://www.walutomat.pl/kursy-walut/");
+                            string eur2 = Eur2("https://internetowykantor.pl/kursy-walut/");
+                            string eur3 = Eur3("https://www.kantoria.com/notowania.html");
+
+                            clientBuffor = ASCIIEncoding.ASCII.GetBytes(eur1+ " " + eur2 + " " + eur3);
                         }
+                        
+                        await client.GetStream().WriteAsync(clientBuffor, 0, clientBuffor.Length);
+                        i = await client.GetStream().ReadAsync(buffer, 0, buffer.Length);
+                       
+                        
                       
                     }
                 });
             }
         }
 
-        static string xml1(string link)
+        static string Eur1(string link)
         {
-            var result = string.Empty;
+            var page = string.Empty;
             using (var webClient = new System.Net.WebClient())
             {
-                result = webClient.DownloadString(link);
+                page = webClient.DownloadString(link);
             }
 
             var doc = new HtmlDocument();
-            doc.LoadHtml(result);
+            doc.LoadHtml(page);
             HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//span[@class='" + "forex" + "']");
 
             string value = nodes[0].InnerText;
@@ -64,29 +70,43 @@ namespace server
             return value;
 
         }
-
-        static async Task clientTask()
+        static string Eur2(string link)
         {
-
-            for (int i = 0; i < 3; i++)
+            var page = string.Empty;
+            using (var webClient = new System.Net.WebClient())
             {
-
-                TcpClient client = new TcpClient();
-                await client.ConnectAsync("localhost", 2048);
-                string msg = Console.ReadLine();
-                byte[] msg_buffer = ASCIIEncoding.ASCII.GetBytes(msg);
-
-
-                await client.GetStream().WriteAsync(msg_buffer, 0, msg.Length).ContinueWith(
-                async (tsk) =>
-                {
-                    byte[] buffer = new byte[1024];
-                    int lnt = await client.GetStream().ReadAsync(buffer, 0, 1024);
-                    Console.WriteLine("Client:" + Encoding.Default.GetString(buffer).Substring(0, lnt));
-                });
+                page = webClient.DownloadString(link);
             }
 
+            var doc = new HtmlDocument();
+            doc.LoadHtml(page);
+            HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//td[@class='" + "currency_table_avg" + "']");
+
+            string value = nodes[0].InnerText;
+
+            return value;
+
         }
+        static string Eur3(string link)
+        {
+            var page = string.Empty;
+            using (var webClient = new System.Net.WebClient())
+            {
+                page = webClient.DownloadString(link);
+            }
+
+            var doc = new HtmlDocument();
+            doc.LoadHtml(page);
+            HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//p[@class='" + "value" + "']");
+
+            string value = nodes[0].InnerText;
+            value = value.Replace(".", ",");
+
+            return value;
+
+        }
+
+
 
         static void Main(string[] args)
         {
@@ -94,7 +114,6 @@ namespace server
             Task serverEUR = serverTask(2048);
             Task serverUSD = serverTask(2049);
             Task serverCHF = serverTask(2050);
-            Task c1 = clientTask();
             Task.WaitAll(new Task[] { serverEUR, serverUSD, serverCHF });
 
         }
