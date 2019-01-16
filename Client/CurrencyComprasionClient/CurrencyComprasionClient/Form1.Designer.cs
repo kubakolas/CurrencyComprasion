@@ -63,7 +63,6 @@
             this.checkedListBox1.TabIndex = 0;
             this.checkedListBox1.TabStop = false;
             this.checkedListBox1.UseTabStops = false;
-            this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -74,7 +73,6 @@
             this.label1.Size = new System.Drawing.Size(292, 35);
             this.label1.TabIndex = 1;
             this.label1.Text = "Choose currencies:";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // button1
             // 
@@ -96,7 +94,6 @@
             this.label2.Size = new System.Drawing.Size(73, 29);
             this.label2.TabIndex = 3;
             this.label2.Text = "-   -   -";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label3
             // 
@@ -107,7 +104,6 @@
             this.label3.Size = new System.Drawing.Size(73, 29);
             this.label3.TabIndex = 4;
             this.label3.Text = "-   -   -";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // label4
             // 
@@ -118,7 +114,6 @@
             this.label4.Size = new System.Drawing.Size(73, 29);
             this.label4.TabIndex = 5;
             this.label4.Text = "-   -   -";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // pictureBox2
             // 
@@ -129,7 +124,6 @@
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 7;
             this.pictureBox2.TabStop = false;
-            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
             // 
             // pictureBox3
             // 
@@ -165,7 +159,6 @@
             this.Controls.Add(this.checkedListBox1);
             this.Name = "Form1";
             this.Text = "Currency  Comparsion";
-            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
