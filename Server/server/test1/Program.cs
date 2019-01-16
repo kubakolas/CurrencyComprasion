@@ -19,12 +19,15 @@ namespace test1
             Console.WriteLine(xml2("https://internetowykantor.pl/kursy-walut/"));
             Console.WriteLine(xml3("https://www.kantoria.com/notowania.html"));
 
-          
+            byte[] buffer = new byte[1024];
+            buffer = ASCIIEncoding.ASCII.GetBytes(xml1("https://www.walutomat.pl/kursy-walut/"));
+            string string_buffor = System.Text.Encoding.Default.GetString(buffer).Substring(0, buffer.Length);
 
+            Console.WriteLine(string_buffor);
             Console.ReadKey();
         }
 
-        static double xml1(string link)
+        static string xml1(string link)
         {
             var result = string.Empty;
             using (var webClient = new System.Net.WebClient())
@@ -40,7 +43,7 @@ namespace test1
 
             double valued = Convert.ToDouble(value);
 
-            return valued;
+            return value;
 
         }
         static double xml2(string link)
