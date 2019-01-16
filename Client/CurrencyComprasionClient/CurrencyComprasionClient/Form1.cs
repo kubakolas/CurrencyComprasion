@@ -17,6 +17,7 @@ namespace CurrencyComprasionClient
         const int EUR_PORT = 2048;
         const int USD_PORT = 2049;
         const int CHF_PORT = 2050;
+        const string ip = "localhost";
         static Dictionary<string, int> currencyToServerPort = new Dictionary<string, int>
         {
             {"EUR", EUR_PORT },
@@ -49,58 +50,51 @@ namespace CurrencyComprasionClient
         {
             TcpClient client = new TcpClient();
             var port = currencyToServerPort[curr];
-            client.Connect("localhost", port);
+            client.Connect(ip, port);
             byte[] msg_buffer = Encoding.ASCII.GetBytes(curr);
             byte[] values = new byte[1024];
             await client.GetStream().WriteAsync(msg_buffer, 0, curr.Length).ContinueWith(
             async (tsk) =>
             {
                 int lnt = await client.GetStream().ReadAsync(values, 0, 1024);
-                if (label2.InvokeRequired)
-                {
-                    var txt = Encoding.Default.GetString(values).Substring(0, lnt);
-                    Console.WriteLine(txt);
-                    var package = txt.Split('-').ToList();
-                    foreach(var s in package)
-                    {
-                        Console.WriteLine(s);
-                    }
-                    setLabels(curr, package);
-                }
+                var txt = Encoding.Default.GetString(values).Substring(0, lnt);
+                var package = txt.Split(' ').ToList();
+                setLabels(curr, package);
             });
         }
 
         private void setLabels(string current, List<string> package)
         {
-            setPagesNamesIfNeeded(package);
+            Label first, second, third;
             switch(current)
             {
-                case "EUR": firstEuro.Invoke(new Action(() => firstEuro.Text = package[1]));
-                            secondEuro.Invoke(new Action(() => secondEuro.Text = package[3]));
-                            thirdEuro.Invoke(new Action(() => thirdEuro.Text = package[5]));
-                            break;
+                case "EUR":
+                    first = firstEuro;
+                    second = secondEuro;
+                    third = thirdEuro;
+                    break;
+                case "USD":
+                    first = firstUsd;
+                    second = secondUsd;
+                    third = thirdUsd;
+                    break;
+                default:
+                    first = firstChf;
+                    second = secondChf;
+                    third = thirdChf;
+                    break; 
             }
-        }
-
-        private void setPagesNamesIfNeeded(List<string> package)
-        {
-
-        }
-        
-
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void label10_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void secondChf_Click(object sender, EventArgs e)
-        {
-
+            if (package.Count == 3)
+            {
+                first.Invoke(new Action(() => first.Text = package[0]));
+                second.Invoke(new Action(() => second.Text = package[1]));
+                third.Invoke(new Action(() => third.Text = package[2]));
+            }
+            else
+            {
+                MessageBox.Show("Couldn't load " + current + " rates correctly. Try again.", "Warning", 
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }
