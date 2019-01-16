@@ -59,14 +59,48 @@ namespace CurrencyComprasionClient
                 if (label2.InvokeRequired)
                 {
                     var txt = Encoding.Default.GetString(values).Substring(0, lnt);
-                    switch (curr)
-                    { 
-                        case "EUR": label2.Invoke(new Action(() => label2.Text = txt)); break;
-                        case "USD": label3.Invoke(new Action(() => label3.Text = txt)); break;
-                        case "CHF": label4.Invoke(new Action(() => label4.Text = txt)); break;
+                    Console.WriteLine(txt);
+                    var package = txt.Split('-').ToList();
+                    foreach(var s in package)
+                    {
+                        Console.WriteLine(s);
                     }
+                    setLabels(curr, package);
                 }
             });
+        }
+
+        private void setLabels(string current, List<string> package)
+        {
+            setPagesNamesIfNeeded(package);
+            switch(current)
+            {
+                case "EUR": firstEuro.Invoke(new Action(() => firstEuro.Text = package[1]));
+                            secondEuro.Invoke(new Action(() => secondEuro.Text = package[3]));
+                            thirdEuro.Invoke(new Action(() => thirdEuro.Text = package[5]));
+                            break;
+            }
+        }
+
+        private void setPagesNamesIfNeeded(List<string> package)
+        {
+
+        }
+        
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void secondChf_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
