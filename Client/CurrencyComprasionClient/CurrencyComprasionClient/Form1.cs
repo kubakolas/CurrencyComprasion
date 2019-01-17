@@ -33,23 +33,29 @@ namespace CurrencyComprasionClient
         private async void button1_Click(object sender, EventArgs e)
         {
             var currList = checkedListBox1.CheckedItems;
-            foreach (var currency in currList)
+            var l = new List<string>();
+            foreach(string s in currList)
             {
-                try
-                {
-                    await clientTask(currency.ToString());
-                }
-                catch(Exception exception)
-                {
-                    MessageBox.Show(exception.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                l.Add(s);
+            }
+            var result = String.Join(" ", l.ToArray());
+            try
+            {
+                Console.WriteLine(result);
+                var t = clientTask(result, EUR_PORT);
+                var t2 = clientTask(result, USD_PORT);
+                var t3 = clientTask(result, CHF_PORT);
+                await Task.WhenAll(t, t2, t3);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        async Task clientTask(string curr)
+        async Task clientTask(string curr, int port)
         {
             TcpClient client = new TcpClient();
-            var port = currencyToServerPort[curr];
             client.Connect(ip, port);
             byte[] msg_buffer = Encoding.ASCII.GetBytes(curr);
             byte[] values = new byte[1024];
@@ -59,42 +65,50 @@ namespace CurrencyComprasionClient
                 int lnt = await client.GetStream().ReadAsync(values, 0, 1024);
                 var txt = Encoding.Default.GetString(values).Substring(0, lnt);
                 var package = txt.Split(' ').ToList();
-                setLabels(curr, package);
+                setLabels(curr, package, port);
             });
         }
 
-        private void setLabels(string current, List<string> package)
+        private void setLabels(string current, List<string> package, int port)
         {
             Label first, second, third;
-            switch(current)
+            switch(port)
             {
-                case "EUR":
+                case EUR_PORT:
                     first = firstEuro;
-                    second = secondEuro;
-                    third = thirdEuro;
+                    second = firstUsd;
+                    third = firstChf;
                     break;
-                case "USD":
-                    first = firstUsd;
+                case USD_PORT:
+                    first = secondEuro;
                     second = secondUsd;
-                    third = thirdUsd;
+                    third = secondChf;
                     break;
                 default:
-                    first = firstChf;
-                    second = secondChf;
+                    first = thirdEuro;
+                    second = thirdUsd;
                     third = thirdChf;
                     break; 
             }
-            if (package.Count == 3)
-            {
-                first.Invoke(new Action(() => first.Text = package[0]));
-                second.Invoke(new Action(() => second.Text = package[1]));
-                third.Invoke(new Action(() => third.Text = package[2]));
+            if (package.Contains("EUR")) {
+                    int index = package.IndexOf("EUR");
+                    first.Invoke(new Action(() => first.Text = package[index + 1]));
             }
-            else
+            if (package.Contains("USD"))
             {
-                MessageBox.Show("Couldn't load " + current + " rates correctly. Try again.", "Warning", 
-                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                int index = package.IndexOf("USD");
+                second.Invoke(new Action(() => second.Text = package[index + 1]));
             }
+            if (package.Contains("CHF"))
+            {
+                int index = package.IndexOf("CHF");
+                third.Invoke(new Action(() => third.Text = package[index + 1]));
+            }      
+            //else
+            //{
+            //    MessageBox.Show("Couldn't load " + current + " rates correctly. Try again.", "Warning", 
+            //                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //}
         }
     }
 }
