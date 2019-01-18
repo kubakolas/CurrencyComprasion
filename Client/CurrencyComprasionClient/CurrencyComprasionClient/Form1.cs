@@ -14,16 +14,11 @@ namespace CurrencyComprasionClient
 {
     public partial class Form1 : Form
     {
-        const int EUR_PORT = 2048;
-        const int USD_PORT = 2049;
-        const int CHF_PORT = 2050;
-        const string ip = "localhost";
-        static Dictionary<string, int> currencyToServerPort = new Dictionary<string, int>
-        {
-            {"EUR", EUR_PORT },
-            {"USD", USD_PORT },
-            {"CHF", CHF_PORT }
-        };
+        const int SERV1_PORT = 2048;
+        const int SERV2_PORT = 2049;
+        const int SERV3_PORT = 2050;
+        const string IP = "localhost";
+        string message = "";
         
         public Form1()
         {
@@ -32,20 +27,18 @@ namespace CurrencyComprasionClient
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            var currList = checkedListBox1.CheckedItems;
-            var l = new List<string>();
-            foreach(string s in currList)
+            var currencyList = new List<string>();
+            foreach(string currency in checkedListBox1.CheckedItems)
             {
-                l.Add(s);
+                currencyList.Add(currency);
             }
-            var result = String.Join(" ", l.ToArray());
+            this.message = string.Join(" ", currencyList.ToArray());
             try
             {
-                Console.WriteLine(result);
-                var t = clientTask(result, EUR_PORT);
-                var t2 = clientTask(result, USD_PORT);
-                var t3 = clientTask(result, CHF_PORT);
-                await Task.WhenAll(t, t2, t3);
+                var task = ClientTask(SERV1_PORT);
+                var task2 = ClientTask(SERV2_PORT);
+                var task3 = ClientTask(SERV3_PORT);
+                await Task.WhenAll(task, task2, task3);
             }
             catch (Exception exception)
             {
@@ -53,62 +46,63 @@ namespace CurrencyComprasionClient
             }
         }
 
-        async Task clientTask(string curr, int port)
+        async Task ClientTask(int port)
         {
             TcpClient client = new TcpClient();
-            client.Connect(ip, port);
-            byte[] msg_buffer = Encoding.ASCII.GetBytes(curr);
-            byte[] values = new byte[1024];
-            await client.GetStream().WriteAsync(msg_buffer, 0, curr.Length).ContinueWith(
+            client.Connect(IP, port);
+            var msgBuffer = Encoding.ASCII.GetBytes(this.message);
+            var serverAnswer = new byte[1024];
+            await client.GetStream().WriteAsync(msgBuffer, 0, this.message.Length).ContinueWith(
             async (tsk) =>
             {
-                int lnt = await client.GetStream().ReadAsync(values, 0, 1024);
-                var txt = Encoding.Default.GetString(values).Substring(0, lnt);
-                var package = txt.Split(' ').ToList();
-                setLabels(curr, package, port);
+                int lnt = await client.GetStream().ReadAsync(serverAnswer, 0, 1024);
+                var serverMessage = Encoding.Default.GetString(serverAnswer).Substring(0, lnt);
+                var package = serverMessage.Split(' ').ToList();
+                SetTextLabels(package, port);
             });
         }
 
-        private void setLabels(string current, List<string> package, int port)
+        private void SetTextLabels(List<string> package, int port)
         {
-            Label first, second, third;
+            if (package.Count == 0)
+            {
+                MessageBox.Show("Couldn't load rates correctly. Try again.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            Label euroLabel, usdLabel, chfLabel;
             switch(port)
             {
-                case EUR_PORT:
-                    first = firstEuro;
-                    second = firstUsd;
-                    third = firstChf;
+                case SERV1_PORT:
+                    euroLabel = firstEuro;
+                    usdLabel = firstUsd;
+                    chfLabel = firstChf;
                     break;
-                case USD_PORT:
-                    first = secondEuro;
-                    second = secondUsd;
-                    third = secondChf;
+                case SERV2_PORT:
+                    euroLabel = secondEuro;
+                    usdLabel = secondUsd;
+                    chfLabel = secondChf;
                     break;
                 default:
-                    first = thirdEuro;
-                    second = thirdUsd;
-                    third = thirdChf;
+                    euroLabel = thirdEuro;
+                    usdLabel = thirdUsd;
+                    chfLabel = thirdChf;
                     break; 
             }
-            if (package.Contains("EUR")) {
-                    int index = package.IndexOf("EUR");
-                    first.Invoke(new Action(() => first.Text = package[index + 1]));
+            if (package.Contains("EUR"))
+            {
+                int index = package.IndexOf("EUR");
+                euroLabel.Invoke(new Action(() => euroLabel.Text = package[index + 1]));
             }
             if (package.Contains("USD"))
             {
                 int index = package.IndexOf("USD");
-                second.Invoke(new Action(() => second.Text = package[index + 1]));
+                usdLabel.Invoke(new Action(() => usdLabel.Text = package[index + 1]));
             }
             if (package.Contains("CHF"))
             {
                 int index = package.IndexOf("CHF");
-                third.Invoke(new Action(() => third.Text = package[index + 1]));
+                chfLabel.Invoke(new Action(() => chfLabel.Text = package[index + 1]));
             }      
-            //else
-            //{
-            //    MessageBox.Show("Couldn't load " + current + " rates correctly. Try again.", "Warning", 
-            //                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //}
         }
     }
 }

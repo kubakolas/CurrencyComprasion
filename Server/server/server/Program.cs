@@ -15,16 +15,12 @@ namespace server
     {
         static async Task serverTask(int port, Page link)
         {
-
             TcpListener server = new TcpListener(IPAddress.Any, port);
-
             server.Start();
 
             while (true)
             {
-
                 TcpClient client = await server.AcceptTcpClientAsync();
-
                 byte[] buffer = new byte[1024];
 
                 await client.GetStream().ReadAsync(buffer, 0, buffer.Length).ContinueWith(
