@@ -1,6 +1,7 @@
 ﻿using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -12,18 +13,14 @@ namespace server
 {
     class Program
     {
-        static async Task serverTask(int port)
+        static async Task serverTask(int port, Page link)
         {
-
             TcpListener server = new TcpListener(IPAddress.Any, port);
-
             server.Start();
 
             while (true)
             {
-
                 TcpClient client = await server.AcceptTcpClientAsync();
-
                 byte[] buffer = new byte[1024];
 
                 await client.GetStream().ReadAsync(buffer, 0, buffer.Length).ContinueWith(
@@ -32,99 +29,62 @@ namespace server
                     int i = t.Result;
                     while (true)
                     {
-                        string bufforString = System.Text.Encoding.Default.GetString(buffer).Substring(0, i);
+                        string bufforString = Encoding.Default.GetString(buffer).Substring(0, i);
                         byte[] clientBuffor = new byte[1024];
-                        if (bufforString == "EUR")
-                        {
-                            string eur1 = Eur1("https://www.walutomat.pl/kursy-walut/").Result;
-                            string eur2 = Eur2("https://internetowykantor.pl/kursy-walut/").Result;
-                            string eur3 = Eur3("https://www.kantoria.com/notowania.html").Result;
-
-
-                            clientBuffor = ASCIIEncoding.ASCII.GetBytes(eur1 + " " + eur2 + " " + eur3);
-                        }
-                        
+                        var values = await GetRatesAsync(bufforString, link);
+                        clientBuffor = Encoding.ASCII.GetBytes(values);
                         await client.GetStream().WriteAsync(clientBuffor, 0, clientBuffor.Length);
                         i = await client.GetStream().ReadAsync(buffer, 0, buffer.Length);
-                       
-                        
-                      
                     }
                 });
             }
         }
 
-        static Task<string> Eur1(string link)
+        static async Task<string> GetRatesAsync(string args, Page pageFormat)
         {
-            return Task.Run(() =>
-            { 
             var page = string.Empty;
-            using (var webClient = new System.Net.WebClient())
+            using (var webClient = new WebClient())
             {
-                page = webClient.DownloadString(link);
+                page = await webClient.DownloadStringTaskAsync(pageFormat.link);
             }
-
             var doc = new HtmlDocument();
             doc.LoadHtml(page);
-            HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//span[@class='" + "forex" + "']");
+            HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes(pageFormat.nodeFormat);
 
-            string value = nodes[0].InnerText;
-
+            string value = "";
+            var currlist = args.Split(' ').ToList();
+            foreach(var curr in currlist)
+            {
+                switch(curr)
+                {
+                    case "EUR": value += "EUR " + nodes[0].InnerText + " "; break;
+                    case "USD": value += "USD " + nodes[1].InnerText + " "; break;
+                    case "CHF": value += "CHF " + nodes[2].InnerText + " "; break;
+                }
+            }
             return value;
-            });
-
         }
-        static Task<string> Eur2(string link)
+
+        struct Page
         {
-            return Task.Run(() =>
+            public string link;
+            public string nodeFormat;
+            public Page(string link, string nodeFormat)
             {
-                var page = string.Empty;
-            using (var webClient = new System.Net.WebClient())
-            {
-                page = webClient.DownloadString(link);
+                this.link = link;
+                this.nodeFormat = nodeFormat;
             }
-
-            var doc = new HtmlDocument();
-            doc.LoadHtml(page);
-            HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//td[@class='" + "currency_table_avg" + "']");
-
-            string value = nodes[0].InnerText;
-
-            return value;
-            });
-
         }
-        static Task<string> Eur3(string link)
-        {
-            return Task.Run(() =>
-            {
-                var page = string.Empty;
-            using (var webClient = new System.Net.WebClient())
-            {
-                page = webClient.DownloadString(link);
-            }
-
-            var doc = new HtmlDocument();
-            doc.LoadHtml(page);
-            HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//p[@class='" + "value" + "']");
-
-            string value = nodes[0].InnerText;
-            value = value.Replace(".", ",");
-
-            return value;
-            });
-        }
-
-
 
         static void Main(string[] args)
         {
-
-            Task serverEUR = serverTask(2048);
-            Task serverUSD = serverTask(2049);
-            Task serverCHF = serverTask(2050);
-            Task.WaitAll(new Task[] { serverEUR, serverUSD, serverCHF });
-
+            const string link1 = "https://www.walutomat.pl/kursy-walut/";
+            const string link2 = "https://internetowykantor.pl/kursy-walut/";
+            const string link3 = "https://www.kantoria.com/notowania.html";
+            Task server1 = serverTask(2048, new Page(link1, "//span[@class='" + "forex" + "']"));
+            Task server2 = serverTask(2049, new Page(link2, "//td[@class='" + "currency_table_avg" + "']"));
+            Task server3 = serverTask(2050, new Page(link3, "//p[@class='" + "value" + "']"));
+            Task.WaitAll(new Task[] { server1, server2, server3 });
         }
     }
 }

@@ -141,7 +141,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 62.22222F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 37.77778F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 82F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 77F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 78F));
             this.tableLayoutPanel1.Controls.Add(this.label6, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.label7, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.label8, 3, 0);
@@ -157,7 +157,7 @@
             this.tableLayoutPanel1.Controls.Add(this.thirdEuro, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.thirdUsd, 2, 3);
             this.tableLayoutPanel1.Controls.Add(this.thirdChf, 3, 3);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(416, 99);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(378, 99);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
@@ -165,14 +165,14 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 57.83133F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 53F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(377, 197);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(415, 197);
             this.tableLayoutPanel1.TabIndex = 9;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label6.Location = new System.Drawing.Point(139, 0);
+            this.label6.Location = new System.Drawing.Point(162, 0);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(34, 14);
@@ -183,7 +183,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label7.Location = new System.Drawing.Point(221, 0);
+            this.label7.Location = new System.Drawing.Point(258, 0);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(36, 14);
@@ -194,7 +194,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label8.Location = new System.Drawing.Point(303, 0);
+            this.label8.Location = new System.Drawing.Point(340, 0);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(34, 14);
@@ -207,9 +207,9 @@
             this.firstPage.Location = new System.Drawing.Point(4, 37);
             this.firstPage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.firstPage.Name = "firstPage";
-            this.firstPage.Size = new System.Drawing.Size(13, 14);
+            this.firstPage.Size = new System.Drawing.Size(93, 14);
             this.firstPage.TabIndex = 4;
-            this.firstPage.Text = "-";
+            this.firstPage.Text = "walutomat.pl";
             this.firstPage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // secondPage
@@ -218,9 +218,9 @@
             this.secondPage.Location = new System.Drawing.Point(4, 89);
             this.secondPage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.secondPage.Name = "secondPage";
-            this.secondPage.Size = new System.Drawing.Size(13, 14);
+            this.secondPage.Size = new System.Drawing.Size(146, 14);
             this.secondPage.TabIndex = 5;
-            this.secondPage.Text = "-";
+            this.secondPage.Text = "internetowykantor.pl";
             this.secondPage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // thirdPage
@@ -229,16 +229,16 @@
             this.thirdPage.Location = new System.Drawing.Point(4, 142);
             this.thirdPage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.thirdPage.Name = "thirdPage";
-            this.thirdPage.Size = new System.Drawing.Size(13, 14);
+            this.thirdPage.Size = new System.Drawing.Size(78, 14);
             this.thirdPage.TabIndex = 6;
-            this.thirdPage.Text = "-";
+            this.thirdPage.Text = "kantoria.pl";
             this.thirdPage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // firstEuro
             // 
             this.firstEuro.AutoSize = true;
             this.firstEuro.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.firstEuro.Location = new System.Drawing.Point(139, 37);
+            this.firstEuro.Location = new System.Drawing.Point(162, 37);
             this.firstEuro.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.firstEuro.Name = "firstEuro";
             this.firstEuro.Size = new System.Drawing.Size(13, 14);
@@ -249,7 +249,7 @@
             // 
             this.firstUsd.AutoSize = true;
             this.firstUsd.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.firstUsd.Location = new System.Drawing.Point(221, 37);
+            this.firstUsd.Location = new System.Drawing.Point(258, 37);
             this.firstUsd.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.firstUsd.Name = "firstUsd";
             this.firstUsd.Size = new System.Drawing.Size(13, 14);
@@ -260,7 +260,7 @@
             // 
             this.firstChf.AutoSize = true;
             this.firstChf.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.firstChf.Location = new System.Drawing.Point(303, 37);
+            this.firstChf.Location = new System.Drawing.Point(340, 37);
             this.firstChf.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.firstChf.Name = "firstChf";
             this.firstChf.Size = new System.Drawing.Size(13, 14);
@@ -271,7 +271,7 @@
             // 
             this.secondEuro.AutoSize = true;
             this.secondEuro.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.secondEuro.Location = new System.Drawing.Point(139, 89);
+            this.secondEuro.Location = new System.Drawing.Point(162, 89);
             this.secondEuro.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.secondEuro.Name = "secondEuro";
             this.secondEuro.Size = new System.Drawing.Size(13, 14);
@@ -282,7 +282,7 @@
             // 
             this.secondUsd.AutoSize = true;
             this.secondUsd.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.secondUsd.Location = new System.Drawing.Point(221, 89);
+            this.secondUsd.Location = new System.Drawing.Point(258, 89);
             this.secondUsd.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.secondUsd.Name = "secondUsd";
             this.secondUsd.Size = new System.Drawing.Size(13, 14);
@@ -293,7 +293,7 @@
             // 
             this.secondChf.AutoSize = true;
             this.secondChf.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.secondChf.Location = new System.Drawing.Point(303, 89);
+            this.secondChf.Location = new System.Drawing.Point(340, 89);
             this.secondChf.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.secondChf.Name = "secondChf";
             this.secondChf.Size = new System.Drawing.Size(13, 14);
@@ -304,7 +304,7 @@
             // 
             this.thirdEuro.AutoSize = true;
             this.thirdEuro.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.thirdEuro.Location = new System.Drawing.Point(139, 142);
+            this.thirdEuro.Location = new System.Drawing.Point(162, 142);
             this.thirdEuro.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.thirdEuro.Name = "thirdEuro";
             this.thirdEuro.Size = new System.Drawing.Size(13, 14);
@@ -315,7 +315,7 @@
             // 
             this.thirdUsd.AutoSize = true;
             this.thirdUsd.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.thirdUsd.Location = new System.Drawing.Point(221, 142);
+            this.thirdUsd.Location = new System.Drawing.Point(258, 142);
             this.thirdUsd.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.thirdUsd.Name = "thirdUsd";
             this.thirdUsd.Size = new System.Drawing.Size(13, 14);
@@ -326,7 +326,7 @@
             // 
             this.thirdChf.AutoSize = true;
             this.thirdChf.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.thirdChf.Location = new System.Drawing.Point(303, 142);
+            this.thirdChf.Location = new System.Drawing.Point(340, 142);
             this.thirdChf.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.thirdChf.Name = "thirdChf";
             this.thirdChf.Size = new System.Drawing.Size(13, 14);
@@ -337,7 +337,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Verdana", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label2.Location = new System.Drawing.Point(411, 46);
+            this.label2.Location = new System.Drawing.Point(373, 46);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(182, 29);
