@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Net.Sockets;
@@ -25,8 +26,9 @@ namespace CurrencyComprasionClient
             InitializeComponent();
         }
 
-        private async void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
+            Stopwatch s = new Stopwatch();
             var currencyList = new List<string>();
             foreach(string currency in checkedListBox1.CheckedItems)
             {
@@ -35,10 +37,12 @@ namespace CurrencyComprasionClient
             this.message = string.Join(" ", currencyList.ToArray());
             try
             {
-                var task = ClientTask(SERV1_PORT);
-                var task2 = ClientTask(SERV2_PORT);
-                var task3 = ClientTask(SERV3_PORT);
-                await Task.WhenAll(task, task2, task3);
+                s.Start();
+                ClientTaskSync(SERV1_PORT);
+                ClientTaskSync(SERV2_PORT);
+                ClientTaskSync(SERV3_PORT);
+                s.Stop();
+                Console.WriteLine(s.Elapsed);
             }
             catch (Exception exception)
             {
@@ -46,20 +50,17 @@ namespace CurrencyComprasionClient
             }
         }
 
-        async Task ClientTask(int port)
+        private void ClientTaskSync(int port)
         {
             TcpClient client = new TcpClient();
             client.Connect(IP, port);
             var msgBuffer = Encoding.ASCII.GetBytes(this.message);
             var serverAnswer = new byte[1024];
-            await client.GetStream().WriteAsync(msgBuffer, 0, this.message.Length).ContinueWith(
-            async (tsk) =>
-            {
-                int lnt = await client.GetStream().ReadAsync(serverAnswer, 0, 1024);
-                var serverMessage = Encoding.Default.GetString(serverAnswer).Substring(0, lnt);
-                var package = serverMessage.Split(' ').ToList();
-                SetTextLabels(package, port);
-            });
+            client.GetStream().Write(msgBuffer, 0, this.message.Length);
+            int lnt = client.GetStream().Read(serverAnswer, 0, 1024);
+            var serverMessage = Encoding.Default.GetString(serverAnswer).Substring(0, lnt);
+            var package = serverMessage.Split(' ').ToList();
+            SetTextLabels(package, port);
         }
 
         private void SetTextLabels(List<string> package, int port)
