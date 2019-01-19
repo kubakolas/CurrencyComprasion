@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Net.Sockets;
@@ -27,6 +28,7 @@ namespace CurrencyComprasionClient
 
         private async void button1_Click(object sender, EventArgs e)
         {
+            Stopwatch s = new Stopwatch();
             var currencyList = new List<string>();
             foreach(string currency in checkedListBox1.CheckedItems)
             {
@@ -35,10 +37,13 @@ namespace CurrencyComprasionClient
             this.message = string.Join(" ", currencyList.ToArray());
             try
             {
+                s.Start();
                 var task = ClientTask(SERV1_PORT);
                 var task2 = ClientTask(SERV2_PORT);
                 var task3 = ClientTask(SERV3_PORT);
                 await Task.WhenAll(task, task2, task3);
+                s.Stop();
+                Console.WriteLine(s.Elapsed);
             }
             catch (Exception exception)
             {
@@ -52,7 +57,7 @@ namespace CurrencyComprasionClient
             client.Connect(IP, port);
             var msgBuffer = Encoding.ASCII.GetBytes(this.message);
             var serverAnswer = new byte[1024];
-            await client.GetStream().WriteAsync(msgBuffer, 0, this.message.Length).ContinueWith(
+            var serverAnswered = await client.GetStream().WriteAsync(msgBuffer, 0, this.message.Length).ContinueWith(
             async (tsk) =>
             {
                 int lnt = await client.GetStream().ReadAsync(serverAnswer, 0, 1024);
@@ -60,6 +65,7 @@ namespace CurrencyComprasionClient
                 var package = serverMessage.Split(' ').ToList();
                 SetTextLabels(package, port);
             });
+            await serverAnswered;
         }
 
         private void SetTextLabels(List<string> package, int port)
