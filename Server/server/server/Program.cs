@@ -31,7 +31,7 @@ namespace server
                     {
                         string bufforString = Encoding.Default.GetString(buffer).Substring(0, i);
                         byte[] clientBuffor = new byte[1024];
-                        var values = await GetRatesAsync(bufforString, link);
+                        var values = GetRatesSync(bufforString, link);
                         clientBuffor = Encoding.ASCII.GetBytes(values);
                         await client.GetStream().WriteAsync(clientBuffor, 0, clientBuffor.Length);
                         i = await client.GetStream().ReadAsync(buffer, 0, buffer.Length);
@@ -40,12 +40,12 @@ namespace server
             }
         }
 
-        static async Task<string> GetRatesAsync(string args, Page pageFormat)
+        static string GetRatesSync(string args, Page pageFormat)
         {
             var page = string.Empty;
             using (var webClient = new WebClient())
             {
-                page = await webClient.DownloadStringTaskAsync(pageFormat.link);
+                page = webClient.DownloadString(pageFormat.link);
             }
             var doc = new HtmlDocument();
             doc.LoadHtml(page);
@@ -81,10 +81,10 @@ namespace server
             const string link1 = "https://www.walutomat.pl/kursy-walut/";
             const string link2 = "https://internetowykantor.pl/kursy-walut/";
             const string link3 = "https://www.kantoria.com/notowania.html";
-            Task server1 = serverTask(2048, new Page(link1, "//span[@class='" + "forex" + "']"));
-            Task server2 = serverTask(2049, new Page(link2, "//td[@class='" + "currency_table_avg" + "']"));
-            Task server3 = serverTask(2050, new Page(link3, "//p[@class='" + "value" + "']"));
-            Task.WaitAll(new Task[] { server1, server2, server3 });
+            var t = serverTask(2048, new Page(link1, "//span[@class='" + "forex" + "']"));
+            var t2 = serverTask(2049, new Page(link2, "//td[@class='" + "currency_table_avg" + "']"));
+            var t3 = serverTask(2050, new Page(link3, "//p[@class='" + "value" + "']"));
+            Task.WaitAll(new Task[] { t, t2, t3 });
         }
     }
 }
