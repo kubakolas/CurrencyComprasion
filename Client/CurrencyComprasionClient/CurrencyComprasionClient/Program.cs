@@ -2,12 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Forms;
 
 namespace CurrencyComprasionClient
 {
     static class Program
     {
+        private static System.Timers.Timer timer;
+
+
+
         /// <summary>
         /// Główny punkt wejścia dla aplikacji.
         /// </summary>
@@ -17,6 +22,8 @@ namespace CurrencyComprasionClient
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
+
+
         }
     }
 }

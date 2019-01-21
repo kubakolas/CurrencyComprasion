@@ -52,6 +52,9 @@
             this.thirdUsd = new System.Windows.Forms.Label();
             this.thirdChf = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
@@ -87,7 +90,7 @@
             this.label1.Location = new System.Drawing.Point(40, 46);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(225, 29);
+            this.label1.Size = new System.Drawing.Size(282, 36);
             this.label1.TabIndex = 1;
             this.label1.Text = "Choose currency:";
             // 
@@ -141,7 +144,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 62.22222F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 37.77778F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 82F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 78F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 79F));
             this.tableLayoutPanel1.Controls.Add(this.label6, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.label7, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.label8, 3, 0);
@@ -175,7 +178,7 @@
             this.label6.Location = new System.Drawing.Point(162, 0);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(34, 14);
+            this.label6.Size = new System.Drawing.Size(42, 18);
             this.label6.TabIndex = 1;
             this.label6.Text = "EUR";
             // 
@@ -183,10 +186,10 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label7.Location = new System.Drawing.Point(258, 0);
+            this.label7.Location = new System.Drawing.Point(257, 0);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(36, 14);
+            this.label7.Size = new System.Drawing.Size(43, 18);
             this.label7.TabIndex = 2;
             this.label7.Text = "USD";
             // 
@@ -194,10 +197,10 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label8.Location = new System.Drawing.Point(340, 0);
+            this.label8.Location = new System.Drawing.Point(339, 0);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(34, 14);
+            this.label8.Size = new System.Drawing.Size(41, 18);
             this.label8.TabIndex = 3;
             this.label8.Text = "CHF";
             // 
@@ -207,7 +210,7 @@
             this.firstPage.Location = new System.Drawing.Point(4, 37);
             this.firstPage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.firstPage.Name = "firstPage";
-            this.firstPage.Size = new System.Drawing.Size(93, 14);
+            this.firstPage.Size = new System.Drawing.Size(115, 18);
             this.firstPage.TabIndex = 4;
             this.firstPage.Text = "walutomat.pl";
             this.firstPage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -218,7 +221,7 @@
             this.secondPage.Location = new System.Drawing.Point(4, 89);
             this.secondPage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.secondPage.Name = "secondPage";
-            this.secondPage.Size = new System.Drawing.Size(146, 14);
+            this.secondPage.Size = new System.Drawing.Size(144, 36);
             this.secondPage.TabIndex = 5;
             this.secondPage.Text = "internetowykantor.pl";
             this.secondPage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -229,7 +232,7 @@
             this.thirdPage.Location = new System.Drawing.Point(4, 142);
             this.thirdPage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.thirdPage.Name = "thirdPage";
-            this.thirdPage.Size = new System.Drawing.Size(78, 14);
+            this.thirdPage.Size = new System.Drawing.Size(95, 18);
             this.thirdPage.TabIndex = 6;
             this.thirdPage.Text = "kantoria.pl";
             this.thirdPage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -241,7 +244,7 @@
             this.firstEuro.Location = new System.Drawing.Point(162, 37);
             this.firstEuro.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.firstEuro.Name = "firstEuro";
-            this.firstEuro.Size = new System.Drawing.Size(13, 14);
+            this.firstEuro.Size = new System.Drawing.Size(15, 18);
             this.firstEuro.TabIndex = 7;
             this.firstEuro.Text = "-";
             // 
@@ -249,10 +252,10 @@
             // 
             this.firstUsd.AutoSize = true;
             this.firstUsd.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.firstUsd.Location = new System.Drawing.Point(258, 37);
+            this.firstUsd.Location = new System.Drawing.Point(257, 37);
             this.firstUsd.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.firstUsd.Name = "firstUsd";
-            this.firstUsd.Size = new System.Drawing.Size(13, 14);
+            this.firstUsd.Size = new System.Drawing.Size(15, 18);
             this.firstUsd.TabIndex = 8;
             this.firstUsd.Text = "-";
             // 
@@ -260,10 +263,10 @@
             // 
             this.firstChf.AutoSize = true;
             this.firstChf.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.firstChf.Location = new System.Drawing.Point(340, 37);
+            this.firstChf.Location = new System.Drawing.Point(339, 37);
             this.firstChf.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.firstChf.Name = "firstChf";
-            this.firstChf.Size = new System.Drawing.Size(13, 14);
+            this.firstChf.Size = new System.Drawing.Size(15, 18);
             this.firstChf.TabIndex = 9;
             this.firstChf.Text = "-";
             // 
@@ -274,7 +277,7 @@
             this.secondEuro.Location = new System.Drawing.Point(162, 89);
             this.secondEuro.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.secondEuro.Name = "secondEuro";
-            this.secondEuro.Size = new System.Drawing.Size(13, 14);
+            this.secondEuro.Size = new System.Drawing.Size(15, 18);
             this.secondEuro.TabIndex = 10;
             this.secondEuro.Text = "-";
             // 
@@ -282,10 +285,10 @@
             // 
             this.secondUsd.AutoSize = true;
             this.secondUsd.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.secondUsd.Location = new System.Drawing.Point(258, 89);
+            this.secondUsd.Location = new System.Drawing.Point(257, 89);
             this.secondUsd.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.secondUsd.Name = "secondUsd";
-            this.secondUsd.Size = new System.Drawing.Size(13, 14);
+            this.secondUsd.Size = new System.Drawing.Size(15, 18);
             this.secondUsd.TabIndex = 11;
             this.secondUsd.Text = "-";
             // 
@@ -293,10 +296,10 @@
             // 
             this.secondChf.AutoSize = true;
             this.secondChf.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.secondChf.Location = new System.Drawing.Point(340, 89);
+            this.secondChf.Location = new System.Drawing.Point(339, 89);
             this.secondChf.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.secondChf.Name = "secondChf";
-            this.secondChf.Size = new System.Drawing.Size(13, 14);
+            this.secondChf.Size = new System.Drawing.Size(15, 18);
             this.secondChf.TabIndex = 12;
             this.secondChf.Text = "-";
             // 
@@ -307,7 +310,7 @@
             this.thirdEuro.Location = new System.Drawing.Point(162, 142);
             this.thirdEuro.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.thirdEuro.Name = "thirdEuro";
-            this.thirdEuro.Size = new System.Drawing.Size(13, 14);
+            this.thirdEuro.Size = new System.Drawing.Size(15, 18);
             this.thirdEuro.TabIndex = 13;
             this.thirdEuro.Text = "-";
             // 
@@ -315,10 +318,10 @@
             // 
             this.thirdUsd.AutoSize = true;
             this.thirdUsd.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.thirdUsd.Location = new System.Drawing.Point(258, 142);
+            this.thirdUsd.Location = new System.Drawing.Point(257, 142);
             this.thirdUsd.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.thirdUsd.Name = "thirdUsd";
-            this.thirdUsd.Size = new System.Drawing.Size(13, 14);
+            this.thirdUsd.Size = new System.Drawing.Size(15, 18);
             this.thirdUsd.TabIndex = 14;
             this.thirdUsd.Text = "-";
             // 
@@ -326,10 +329,10 @@
             // 
             this.thirdChf.AutoSize = true;
             this.thirdChf.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.thirdChf.Location = new System.Drawing.Point(340, 142);
+            this.thirdChf.Location = new System.Drawing.Point(339, 142);
             this.thirdChf.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.thirdChf.Name = "thirdChf";
-            this.thirdChf.Size = new System.Drawing.Size(13, 14);
+            this.thirdChf.Size = new System.Drawing.Size(15, 18);
             this.thirdChf.TabIndex = 15;
             this.thirdChf.Text = "-";
             // 
@@ -340,15 +343,45 @@
             this.label2.Location = new System.Drawing.Point(373, 46);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(182, 29);
+            this.label2.Size = new System.Drawing.Size(231, 36);
             this.label2.TabIndex = 10;
             this.label2.Text = "Current rates:";
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(225, 258);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(88, 38);
+            this.button2.TabIndex = 11;
+            this.button2.Text = "start";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(222, 306);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 26);
+            this.textBox1.TabIndex = 12;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(79, 306);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 35);
+            this.button3.TabIndex = 13;
+            this.button3.Text = "stop";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 14F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(833, 344);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.pictureBox3);
@@ -396,6 +429,9 @@
         private System.Windows.Forms.Label thirdUsd;
         private System.Windows.Forms.Label thirdChf;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button button3;
     }
 }
 

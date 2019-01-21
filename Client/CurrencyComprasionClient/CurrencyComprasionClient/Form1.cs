@@ -10,9 +10,13 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Timers;
+using System.IO;
 
 namespace CurrencyComprasionClient
 {
+   
+
     public partial class Form1 : Form
     {
         const int SERV1_PORT = 2048;
@@ -20,13 +24,15 @@ namespace CurrencyComprasionClient
         const int SERV3_PORT = 2050;
         const string IP = "localhost";
         string message = "";
-        
+        private static System.Timers.Timer timer;
+
+
         public Form1()
         {
             InitializeComponent();
         }
 
-        private async void button1_Click(object sender, EventArgs e)
+        public async void button1_Click(object sender, EventArgs e)
         {
             Stopwatch s = new Stopwatch();
             var currencyList = new List<string>();
@@ -109,6 +115,28 @@ namespace CurrencyComprasionClient
                 int index = package.IndexOf("CHF");
                 chfLabel.Invoke(new Action(() => chfLabel.Text = package[index + 1]));
             }      
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+            timer = new System.Timers.Timer(1000);
+            timer.Elapsed += new ElapsedEventHandler(button1_Click);
+            timer.Interval = Convert.ToInt32(textBox1.Text);
+            timer.Enabled = true;
+
+            
+            using (StreamWriter w = File.AppendText("myFile.txt"))
+            {
+                w.WriteLine(string.Format("{0:HH:mm:ss tt}", DateTime.Now) + Environment.NewLine);
+                
+            }
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            timer.Enabled = false;
         }
     }
 }
