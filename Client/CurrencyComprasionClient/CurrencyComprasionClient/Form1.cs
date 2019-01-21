@@ -25,18 +25,25 @@ namespace CurrencyComprasionClient
         const string IP = "localhost";
         string message = "";
         private static System.Timers.Timer timer;
-
+        const string page1 = "walutomat.pl";
+        const string page2 = "internetowykantor.pl";
+        const string page3 = "kantoria.pl";
 
         public Form1()
         {
             InitializeComponent();
         }
 
-        public async void button1_Click(object sender, EventArgs e)
+        public void button1_Click(object sender, EventArgs e)
+        {
+            executeClientTasks();
+        }
+
+        public async void executeClientTasks(object source = null, ElapsedEventArgs e = null)
         {
             Stopwatch s = new Stopwatch();
             var currencyList = new List<string>();
-            foreach(string currency in checkedListBox1.CheckedItems)
+            foreach (string currency in checkedListBox1.CheckedItems)
             {
                 currencyList.Add(currency);
             }
@@ -49,7 +56,20 @@ namespace CurrencyComprasionClient
                 var task3 = ClientTask(SERV3_PORT);
                 await Task.WhenAll(task, task2, task3);
                 s.Stop();
-                Console.WriteLine(s.Elapsed);
+                if (source != null)
+                {
+                    using (StreamWriter w = File.AppendText("../../currencyCourses.txt"))
+                    {
+                        w.WriteLine(string.Format("{0:HH:mm:ss tt}", DateTime.Now));
+                        var firstPageCurr = "EUR: " + firstEuro.Text + " | " + "USD: " + firstUsd.Text + " | " + "CHF: " + firstChf.Text;
+                        var secPageCurr = "EUR: " + secondEuro.Text + " | " + "USD: " + secondUsd.Text + " | " + "CHF: " + secondChf.Text;
+                        var thirdPageCurr = "EUR: " + thirdEuro.Text + " | " + "USD: " + thirdUsd.Text + " | " + "CHF: " + thirdChf.Text;
+                        w.WriteLine("{0,-25}{1,-5}", page1, firstPageCurr);
+                        w.WriteLine("{0,-25}{1,-5}", page2, secPageCurr);
+                        w.WriteLine("{0,-25}{1,-5}", page3, thirdPageCurr);
+                        w.WriteLine();
+                    }
+                }
             }
             catch (Exception exception)
             {
@@ -119,24 +139,31 @@ namespace CurrencyComprasionClient
 
         private void button2_Click(object sender, EventArgs e)
         {
-
-            timer = new System.Timers.Timer(1000);
-            timer.Elapsed += new ElapsedEventHandler(button1_Click);
-            timer.Interval = Convert.ToInt32(textBox1.Text);
-            timer.Enabled = true;
-
-            
-            using (StreamWriter w = File.AppendText("myFile.txt"))
+            if (textBox1.Text == "")
             {
-                w.WriteLine(string.Format("{0:HH:mm:ss tt}", DateTime.Now) + Environment.NewLine);
-                
+                MessageBox.Show("Interval field can't be empty.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-
+            string input = textBox1.Text.Replace(".", ",");
+            double milisecs = Convert.ToDouble(input) * 60 * 1000;
+            if (milisecs > 0)
+            {
+                timer = new System.Timers.Timer(milisecs);
+                timer.Elapsed += new ElapsedEventHandler(executeClientTasks);
+                timer.Enabled = true;
+                button1.Enabled = false;
+                button2.Enabled = false;
+            } else
+            {
+                MessageBox.Show("Interval must be greater than 0.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             timer.Enabled = false;
+            button1.Enabled = true;
+            button2.Enabled = true;
         }
     }
 }
